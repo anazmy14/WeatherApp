@@ -1,38 +1,142 @@
-.App {
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;1,300&display=swap');
+:root{
+   --color-gray: #ebebeb; 
+}
+
+body{
+  background: #162036;
+  color:   white;
+  font-family: 'Open Sans', sans-serif;
+}
+
+a{
+  text-decoration: none;
+}
+
+.container {
+  padding: 2rem;
+}
+
+.card{
+  padding: 2rem 5rem;
+  border-radius: 10px;
+  height: fit-content;
+  font-size:20px;
+  text-align: center;
+  margin: 1rem;
+ }
+ 
+
+.card-temp{
+  margin: auto;
+  max-width: 400px;
+}
+
+.card-city {
+  background: #39538d;
+  color: white;
+  width: 200px;
+  height: 30px;
+  line-height: 30px;  
+  cursor: pointer;
+  transition: 0.5s;
+}
+.card-city:hover{
+
+  background:  #99eeb4;
+
+}
+.card__header{
+  font-size: 22px;
+  color:  #99eeb4;
+}
+.card__time{
+  color: var(--color-gray);
+  font-size: 16px;
+}
+.card__temp {
+  color: #99eeb4;
+  font-size:90px;
+  margin: 20px;
+  font-weight: bold;
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.card__unit{
+  font-size:22px;
+  margin-left: -23px;
+  color: var(--color-gray);
+  font-weight: 200;
 }
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.card__desc{
+  color: var(--color-gray);  
+  font-size: 16px;
 }
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+.cities-list {
+  list-style: none;
+  display:flex;
+  flex-wrap: wrap;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  padding: 0;
 }
 
-.App-link {
-  color: #61dafb;
+table {
+  margin: 20px auto;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+
+tbody {
+  display: flex;
+  flex-direction: row;
+  width:  100%;
+}
+tr{
+  flex-basis: 100%;
+  display: block;
+}
+
+th {
+  background: #0066CC;
+  padding: 10px;
+}
+
+text{
+  text-anchor: center;
+}
+
+ .axis path, .axis line {
+  stroke: #3c3d3d;
+
+}
+
+.axis text{
+  fill: #578fc7; 
+  font-size:14px;
+}
+
+.bar{
+  fill: #FF7F50;
+  cursor: pointer;
+  transition: ease-in-out 0.2s;
+}
+.bar:hover{
+  fill : #578fc7; 
+}
+
+.tooltip{
+  fill: #578fc7; 
+  text-anchor: center;
+  background: black;
+  font-weight: bold;
+}
+
+svg {
+  max-width:  1400px;
+  margin: auto;
+}
+
+@media screen and (max-width: 768px){
+  .axis text {
+    font-size: 10px;
+  }  
 }
