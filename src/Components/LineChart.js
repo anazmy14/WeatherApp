@@ -1,13 +1,25 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useState, useRef } from "react";
 import * as d3 from "d3";
-
 export default function LineChart({ data, dataKeys, colors }) {
   const ref = useRef();
+  const [screenWidth, setScreenWidth] = useState(0);
   useEffect(() => {
-    const marginX = 50;
-    const marginY = 70;
+    window.addEventListener("resize", handleResize);
+    createChart(data);
+    return function cleanup() {
+      d3.select(ref.current).selectAll("*").remove();
+      window.removeEventListener("resize", handleResize);
+    };
+  }, [screenWidth, data]);
 
-    const width = ref.current.width.baseVal.value - marginX;
+  const handleResize = () => {
+    setScreenWidth(window.innerWidth);
+  };
+
+  const createChart = (data) => {
+    const marginX = 60;
+    const marginY = 70;
+    const width = Math.min(1400, window.innerWidth) - marginX;
     const height = 400 - marginY;
     const xScale = d3
       .scalePoint()
@@ -20,18 +32,39 @@ export default function LineChart({ data, dataKeys, colors }) {
         d3.max(data, (d) => d.maxTemp),
       ])
       .range([height, marginY]);
+
     const container = d3.select(ref.current);
-    for (let i = 0; i < dataKeys.length; i++) addLine(dataKeys[i], colors[i]);
+
+    //Draw the 3 data lines
+    for (let i = 0; i < dataKeys.length; i++) {
+    addLine(dataKeys[i], colors[i]);
+    container.append("rect")
+    .attr("x", width/2 )
+    .attr("y", i*20)
+    .attr("width", 10)
+    .attr("height", 10)
+    .style("fill", colors[i])
+    container.append("text")
+    .attr("x", width/2 +30 )
+    .attr("y", i*20+10)
+      .text(dataKeys[i])
+    .style("fill", colors[i])
+    .style("font-size", 14)
+    }
     container
       .append("g")
       .attr("transform", "translate(0," + height + ")")
       .classed("axis", true)
-      .call(d3.axisBottom(xScale));
+      .call(d3.axisBottom(xScale)
+      .tickFormat( date =>  new Date(date).toLocaleString('en-us', {  weekday: 'long' } )   )
+      .tickValues(data.map(day => day.date) ) )
+     
     container
       .append("g")
       .attr("transform", `translate(${marginX},0)`)
       .classed("axis", true)
       .call(d3.axisLeft(yScale));
+
     container
       .select(".axis")
       .selectAll("text")
@@ -48,26 +81,20 @@ export default function LineChart({ data, dataKeys, colors }) {
         .attr("fill", "none")
         .attr("stroke", color)
         .attr("stroke-width", 5)
-
         .attr(
           "d",
           d3
-            .line()
+            .line()            
             .x(function (d) {
               return xScale(d.date);
             })
             .y(function (d) {
               return yScale(d[key]);
             })
+            
         )
-        .attr("stroke-dasharray", "0 0")
-        .attr("stroke-dashoffset", 0)
-
-        .transition()
-        .duration(4000)
-        .attr("stroke-dashoffset", 0);
     }
-  });
+  };
 
-  return <svg ref={ref} width="100%" height={400} />;
+  return <svg ref={ref} width="100%" height="400" />;
 }

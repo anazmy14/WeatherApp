@@ -1,14 +1,13 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import "./index.css";
-import App from "./App";
-import City from "./City";
+import Home from "./pages/Home";
+import City from "./pages/City";
 
 ReactDOM.render(
   <BrowserRouter>
     <Routes>
-      <Route path="/" exact element={<App/>} />
+      <Route path="/" exact element={<Home/>} />
       <Route path=":country/:city" element={<City />} />
     </Routes>
   </BrowserRouter>,
