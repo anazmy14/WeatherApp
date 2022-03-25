@@ -41,7 +41,7 @@ export default function City() {
       }),
       nextDays: data.data.data.weather.map((day, index) => {
         return {
-          date: day.date, 
+          date: day.date,
           avgTemp: day.avgtempC,
           maxTemp: day.maxtempC,
           minTemp: day.mintempC,
@@ -51,62 +51,57 @@ export default function City() {
     });
   };
 
-  if(!currentWeather)
-   return <Loader/>
+  if (!currentWeather) return <Loader />;
 
   return (
     <div>
-      {currentWeather && (
-        <>
-          <div className="card card-temp">
-            <h2 className="card__header">
-              <TiLocation className="icon" />
-              {city}, {country}{" "}
-            </h2>
+      <div className="card card-temp">
+        <h2 className="card__header">
+          <TiLocation className="icon" />
+          {city}, {country}{" "}
+        </h2>
 
-            <span className="card__time"> {currentWeather.time} </span>
+        <span className="card__time"> {currentWeather.time} </span>
 
-            <p className="card__temp">
-              {currentWeather.temp}°<span className="card__unit">c</span>
-            </p>
-            <p className="card__desc">
-              Feels Like
-              {" " + currentWeather.feelsLike}
-              <span>°</span>
-              <br />
-              {currentWeather.desc}
-            </p>
-          </div>
+        <p className="card__temp">
+          {currentWeather.temp}°<span className="card__unit">c</span>
+        </p>
+        <p className="card__desc">
+          Feels Like
+          {" " + currentWeather.feelsLike}
+          <span>°</span>
+          <br />
+          {currentWeather.desc}
+        </p>
+      </div>
 
-          <Collapse title="Details">
-            <div className="table">
-              {Object.keys(currentWeather.details).map((key) => (
-                <div className="table__col">
-                  <span>{key}</span>
-                  <span>{currentWeather.details[key]}</span>
-                </div>
-              ))}
+      <Collapse title="Details">
+        <div className="table">
+          {Object.keys(currentWeather.details).map((key) => (
+            <div className="table__col">
+              <span>{key}</span>
+              <span>{currentWeather.details[key]}</span>
             </div>
-          </Collapse>
+          ))}
+        </div>
+      </Collapse>
 
-          <div className="charts-container">
-            <Collapse title="2 Weeks Weather">
-              <LineChart
-                data={currentWeather.nextDays}
-                dataKeys={["minTemp", "avgTemp", "maxTemp"]}
-                colors={["#01FF70", "#FF851B", "#FF4136"]}
-              />
-            </Collapse>
+      <div className="charts-container">
+        <Collapse title="2 Weeks Weather">
+          <LineChart
+            data={currentWeather.nextDays}
+            dataKeys={["minTemp", "avgTemp", "maxTemp"]}
+            colors={["#01FF70", "#FF851B", "#FF4136"]}
+          />
+        </Collapse>
 
-            <Collapse title="Monthly Average Temperature">
-              <BarChart data={currentWeather.monthlyAvg} />
-            </Collapse>
-            <Collapse title="Rain Average Per Month">
-              <PieChart data={currentWeather.monthlyRain} />
-            </Collapse>
-          </div>
-        </>
-      )}
+        <Collapse title="Monthly Average Temperature">
+          <BarChart data={currentWeather.monthlyAvg} />
+        </Collapse>
+        <Collapse title="Rain Average Per Month">
+          <PieChart data={currentWeather.monthlyRain} />
+        </Collapse>
+      </div>
     </div>
   );
 }

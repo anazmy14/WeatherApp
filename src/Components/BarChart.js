@@ -31,7 +31,7 @@ export default function BarChart({ data }) {
 
     const yScale = d3
       .scaleLinear()
-      .domain([d3.min(data, (d) => d.temp - 5), d3.max(data, (d) => d.temp)])
+      .domain([d3.min(data, (d) => Number(d.temp)- 5), d3.max(data, (d) => Number(d.temp)+5 )])
       .range([height, marginY]);
 
     const container = d3.select(ref.current);

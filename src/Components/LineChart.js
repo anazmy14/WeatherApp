@@ -28,8 +28,8 @@ export default function LineChart({ data, dataKeys, colors }) {
     const yScale = d3
       .scaleLinear()
       .domain([
-        d3.min(data, (d) => d.minTemp - 5),
-        d3.max(data, (d) => d.maxTemp),
+        d3.min(data, (d) => Number(d.minTemp) - 5),
+        d3.max(data, (d) => Number(d.maxTemp)),
       ])
       .range([height, marginY]);
 
@@ -37,28 +37,35 @@ export default function LineChart({ data, dataKeys, colors }) {
 
     //Draw the 3 data lines
     for (let i = 0; i < dataKeys.length; i++) {
-    addLine(dataKeys[i], colors[i]);
-    container.append("rect")
-    .attr("x", width/2 )
-    .attr("y", i*20)
-    .attr("width", 10)
-    .attr("height", 10)
-    .style("fill", colors[i])
-    container.append("text")
-    .attr("x", width/2 +30 )
-    .attr("y", i*20+10)
-      .text(dataKeys[i])
-    .style("fill", colors[i])
-    .style("font-size", 14)
+      addLine(dataKeys[i], colors[i]);
+      container
+        .append("rect")
+        .attr("x", width / 2)
+        .attr("y", i * 20)
+        .attr("width", 10)
+        .attr("height", 10)
+        .style("fill", colors[i]);
+      container
+        .append("text")
+        .attr("x", width / 2 + 30)
+        .attr("y", i * 20 + 10)
+        .text(dataKeys[i])
+        .style("fill", colors[i])
+        .style("font-size", 14);
     }
     container
       .append("g")
       .attr("transform", "translate(0," + height + ")")
       .classed("axis", true)
-      .call(d3.axisBottom(xScale)
-      .tickFormat( date =>  new Date(date).toLocaleString('en-us', {  weekday: 'long' } )   )
-      .tickValues(data.map(day => day.date) ) )
-     
+      .call(
+        d3
+          .axisBottom(xScale)
+          .tickFormat((date) =>
+            new Date(date).toLocaleString("en-us", { weekday: "long" })
+          )
+          .tickValues(data.map((day) => day.date))
+      );
+
     container
       .append("g")
       .attr("transform", `translate(${marginX},0)`)
@@ -84,15 +91,14 @@ export default function LineChart({ data, dataKeys, colors }) {
         .attr(
           "d",
           d3
-            .line()            
+            .line()
             .x(function (d) {
               return xScale(d.date);
             })
             .y(function (d) {
               return yScale(d[key]);
             })
-            
-        )
+        );
     }
   };
 

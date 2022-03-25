@@ -3,7 +3,7 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import { geolocated } from "react-geolocated";
 import Loader from "../Components/Loader";
-import EnableLocation from "../Components/EnableLocation"
+import EnableLocation from "../Components/EnableLocation";
 import { TiLocation } from "react-icons/ti";
 import "../App.css";
 
@@ -42,10 +42,9 @@ function App({ coords, isGeolocationEnabled }) {
     );
   };
 
-  if (!isGeolocationEnabled) return <EnableLocation/>;
+  if (!isGeolocationEnabled) return <EnableLocation />;
 
-
-  if (!currentWeather) return <Loader />;
+  if (!currentWeather || !cities.length) return <Loader />;
 
   return (
     <div className="container">
