@@ -5,6 +5,7 @@ import Loader from "../Components/Loader";
 import LineChart from "../Components/LineChart";
 import BarChart from "../Components/BarChart";
 import PieChart from "../Components/PieChart";
+import PercentChart from "../Components/PercentChart";
 import Collapse from "../Components/Collapse";
 import { TiLocation } from "react-icons/ti";
 
@@ -18,14 +19,18 @@ export default function City() {
     const data =
       await axios.get(`https://api.worldweatheronline.com/premium/v1/weather.ashx?key=b1dc4e3642144613bfa184304222003&q=
         ${city},${country}&fx24=yes&format=json&includelocation=yes`);
-
+    
+       console.log(data.data.data) 
     setCurrentWeather({
       city: data.data.data.nearest_area[0].region[0].value,
       temp: data.data.data.current_condition[0].temp_C,
       desc: data.data.data.current_condition[0].weatherDesc[0].value,
       feelsLike: data.data.data.current_condition[0].FeelsLikeC,
       time: data.data.data.current_condition[0].observation_time,
-      details: { ...data.data.data.weather[0].astronomy[0] },
+      astronomy: { ...data.data.data.weather[0].astronomy[0] },
+      humidity : data.data.data.current_condition[0].humidity,
+      uv : data.data.data.current_condition[0].uvIndex,
+      wind : data.data.data.current_condition[0].windspeedKmph,
       monthlyAvg: data.data.data.ClimateAverages[0].month.map((month) => {
         return {
           month: month.name,
@@ -76,11 +81,29 @@ export default function City() {
       </div>
 
       <Collapse title="Details">
+          <div className="details-section">
+            <div>
+            <p> humidity </p>
+            <PercentChart value={currentWeather.humidity}  />
+            </div>
+            <div>
+            <p> UV Index </p>
+            <PercentChart value={currentWeather.uv} levels={[2,5,8,11]} isPercent={false}  />
+            </div>
+            <div>
+            <p> Wind </p>
+            <PercentChart value={currentWeather.wind} levels={[19,29,39,50]} isPercent={false}  />
+            </div>
+
+          </div>  
+        </Collapse>    
+
+      <Collapse title="Astronomy">
         <div className="table">
-          {Object.keys(currentWeather.details).map((key) => (
+          {Object.keys(currentWeather.astronomy).map((key) => (
             <div className="table__col">
               <span>{key}</span>
-              <span>{currentWeather.details[key]}</span>
+              <span>{currentWeather.astronomy[key]}</span>
             </div>
           ))}
         </div>
@@ -101,6 +124,8 @@ export default function City() {
         <Collapse title="Rain Average Per Month">
           <PieChart data={currentWeather.monthlyRain} />
         </Collapse>
+        
+      
       </div>
     </div>
   );

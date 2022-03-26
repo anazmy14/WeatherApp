@@ -8,6 +8,8 @@
 
 *, ::after, ::before {
   box-sizing: border-box;
+  margin : 0;
+  padding : 0;
 }
 
 a{
@@ -202,12 +204,25 @@ text{
 .collapse-header__content{
    max-width: 1400px;
    margin: auto;
+   text-align: center;
 } 
 
 .enable-location{
   padding:3rem;
   margin: auto;
   text-align: center;
+}
+
+.percent {
+  font-size:0.5px;
+  font-weight: bold;
+  text-anchor: middle;
+}
+
+.details-section {
+  display:flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
 }
 @keyframes loader-animation {
   0% {
