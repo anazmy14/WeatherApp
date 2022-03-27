@@ -91,8 +91,8 @@ export default function City() {
             <PercentChart value={currentWeather.uv} levels={[2,5,8,11]} isPercent={false}  />
             </div>
             <div>
-            <p> Wind </p>
-            <PercentChart value={currentWeather.wind} levels={[19,29,39,50]} isPercent={false}  />
+            <p> Wind Speed Per Km </p>
+            <PercentChart value={currentWeather.wind} levels={[19,29,39,60]} isPercent={false}  />
             </div>
 
           </div>  
