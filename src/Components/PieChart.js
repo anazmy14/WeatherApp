@@ -43,7 +43,7 @@ export default function BarChart({ data }) {
     const container = d3.select(ref.current);
     const g = container
       .append("g")
-      .attr("transform", `translate(${width / 2 - 7}, ${radius} )`);
+      .attr("transform", `translate(${width / 2}, ${radius} )`);
     const pie = d3.pie().value((d) => d.value);
     const arc = g
       .selectAll("arc")
