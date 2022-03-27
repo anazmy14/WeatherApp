@@ -37,7 +37,7 @@ function App({ coords, isGeolocationEnabled }) {
     );
     setCities(
       cities.data.data.states.map((state) =>
-        state.name.slice(0, state.name.lastIndexOf(" "))
+        state.name //.slice(0, state.name.lastIndexOf(" "))
       )
     );
   };
@@ -71,9 +71,14 @@ function App({ coords, isGeolocationEnabled }) {
       )}
       <ul className="cities-list">
         {cities.map((city, index) => (
-          <Link to={`${currentWeather.country}/${city}`} key={index}>
-            <li className="card card-city"> {city} </li>
+          <>       
+          { (index === 0 || city[0] != cities[index-1][0]) &&
+           <p className="cities-list__character"> {city[0]} </p>  }
+  
+          <Link className="card card-city" to={`${currentWeather.country}/${city}`} key={index}>
+            <li> {city} </li>
           </Link>
+          </>
         ))}
       </ul>
     </div>

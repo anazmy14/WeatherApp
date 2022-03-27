@@ -28,7 +28,6 @@ body{
 }
 
 .card{
-  border-radius: 10px;
   height: fit-content;
   font-size:20px;
   text-align: center;
@@ -48,15 +47,34 @@ body{
 .card-city {
   background: #39538d;
   color: white;
-  width: 200px;
-  height: 80px !important;
-  line-height: 80px;  
+  width: 45% ;
+  height: 40px;
+  line-height: 40px;  
   cursor: pointer;
   transition: 0.5s;
+  border-radius: 5px;
+  margin: 10px 0;
+
+  
 }
 .card-city:hover{
   background:  var(--color-blue);
 }
+.card-city li {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+}
+
+.cities-list__character{
+  width: 100%;
+  color: var(--color-blue);
+  margin-top: 40px;
+  padding-top: 20px;
+  border-bottom: solid 1px var(--color-blue);
+}
+
 
 .card__time{
   color: var(--color-gray);
@@ -82,10 +100,13 @@ body{
   font-size: 16px;
 }
 .cities-list {
+  max-width: 1400px;
+  margin: auto;
+  margin-top: 20px;
   list-style: none;
   display:flex;
   flex-wrap: wrap;
-  justify-content: center;
+  justify-content: space-between;
   padding: 0;
 }
 
@@ -262,6 +283,9 @@ text{
   }
   .table__col:not(:last-child) {
     border-bottom: solid 2px var(--color-blue);
+  }
+  .card-city{
+    width: 100%;
   }
  
 }
