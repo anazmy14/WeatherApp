@@ -20,7 +20,6 @@ export default function City() {
       await axios.get(`https://api.worldweatheronline.com/premium/v1/weather.ashx?key=b1dc4e3642144613bfa184304222003&q=
         ${city},${country}&fx24=yes&format=json&includelocation=yes`);
     
-       console.log(data.data.data) 
     setCurrentWeather({
       city: data.data.data.nearest_area[0].region[0].value,
       temp: data.data.data.current_condition[0].temp_C,
@@ -101,7 +100,7 @@ export default function City() {
       <Collapse title="Astronomy">
         <div className="table">
           {Object.keys(currentWeather.astronomy).map((key) => (
-            <div className="table__col">
+            <div className="table__col" key={key}>
               <span>{key}</span>
               <span>{currentWeather.astronomy[key]}</span>
             </div>
