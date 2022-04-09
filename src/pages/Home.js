@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, Fragment } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { geolocated } from "react-geolocated";
@@ -36,8 +36,8 @@ function App({ coords, isGeolocationEnabled }) {
       { country }
     );
     setCities(
-      cities.data.data.states.map((state) =>
-        state.name //.slice(0, state.name.lastIndexOf(" "))
+      cities.data.data.states.map(
+        (state) => state.name //.slice(0, state.name.lastIndexOf(" "))
       )
     );
   };
@@ -71,14 +71,18 @@ function App({ coords, isGeolocationEnabled }) {
       )}
       <ul className="cities-list">
         {cities.map((city, index) => (
-          <>       
-          { (index === 0 || city[0] != cities[index-1][0]) &&
-           <p className="cities-list__character"> {city[0]} </p>  }
-  
-          <Link className="card card-city" to={`${currentWeather.country}/${city}`} key={index}>
-            <li> {city} </li>
-          </Link>
-          </>
+          <Fragment key={index}>
+            {(index === 0 || city[0] != cities[index - 1][0]) && (
+              <p className="cities-list__character"> {city[0]} </p>
+            )}
+
+            <Link
+              className="card card-city"
+              to={`${currentWeather.country}/${city}`}
+            >
+              <li> {city} </li>
+            </Link>
+          </Fragment>
         ))}
       </ul>
     </div>
